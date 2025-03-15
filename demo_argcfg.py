@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import typing
-import argconfig
+import argcfg
 import argparse
 import sys
 
@@ -16,7 +16,7 @@ class TrainingConfig:
 
 
 # Step 2: Load a default configuration based on the dataset
-def load_default_config(dataset):
+def load_default_cfg(dataset):
     """Returns a dataset-specific default TrainingConfig."""
     if dataset == "mnist":
         return TrainingConfig(
@@ -41,12 +41,12 @@ if __name__ == "__main__":
     parser.add_argument("--dataset", type=str, help="Dataset name")
 
     # Dynamically add arguments based on TrainingConfig fields
-    argconfig.add_args_by_config_class(parser, TrainingConfig, verbose=True)
+    argcfg.add_args_by_config_class(parser, TrainingConfig, verbose=True)
 
 
     # Uncomment the following block if you want to test this script without manually passing CLI arguments
     # This simulates running:
-    # python demo_argconfig.py --dataset cifar10 --num_epochs 50 --hidden_channels 32,64,128 --use_bn False
+    # python demo_argcfg.py --dataset cifar10 --num_epochs 50 --hidden_channels 32,64,128 --use_bn False
     # Note that, you do not need to pass all the arguments, only the ones you want to override
 
     # cmd = "--dataset cifar10 --num_epochs 50 --hidden_channels 32,64,128 --use_bn False"
@@ -57,10 +57,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Step 5: Load the default configuration based on the dataset
-    config = load_default_config(args.dataset)
+    config = load_default_cfg(args.dataset)
 
     # Step 6: Override default config values with parsed arguments
-    argconfig.combine_args_into_config(config, args, verbose=True)
+    argcfg.combine_args_into_config(config, args, verbose=True)
 
     # Step 7: Display the final configuration after merging defaults & parsed arguments
     print("Final Configuration:")

@@ -1,8 +1,8 @@
-# 🚀 argconfig
+# 🚀 argcfg
 
-**argconfig** 🛠️ is a Python library for managing structured configuration parameters. It is particularly useful for **machine learning experiments** 🤖, **deep learning pipelines** 🧠, and **CLI applications** 💻, allowing users to define structured configuration objects using Python's `dataclass` and update them dynamically from command-line arguments.
+**argcfg** 🛠️ is a Python library for managing structured configuration parameters. It is particularly useful for **machine learning experiments** 🤖, **deep learning pipelines** 🧠, and **CLI applications** 💻, allowing users to define structured configuration objects using Python's `dataclass` and update them dynamically from command-line arguments.
 
-📌 **GitHub Repository:** https://github.com/CrawlScript/argconfig
+📌 **GitHub Repository:** https://github.com/CrawlScript/argcfg
 
 ## ✨ Features
 
@@ -13,10 +13,10 @@
 
 ## 📥 Installation
 
-Install `argconfig` via pip:
+Install `argcfg` via pip:
 
 ```bash
-pip install argconfig
+pip install argcfg
 ```
 
 ---
@@ -24,17 +24,17 @@ pip install argconfig
 ## 🚀 Usage
 
 
-Below is a complete example demonstrating how to use `argconfig` to define a configuration class, manually set arguments, and override default settings from the command line.
+Below is a complete example demonstrating how to use `argcfg` to define a configuration class, manually set arguments, and override default settings from the command line.
 
 
 
-### **Example: Using `argconfig` for Training Configuration**
+### **Example: Using `argcfg` for Training Configuration**
 
-#### **1. Create `demo_argconfig.py`**
+#### **1. Create `demo_argcfg.py`**
 ```python
 from dataclasses import dataclass
 import typing
-import argconfig
+import argcfg
 import argparse
 import sys
 
@@ -50,7 +50,7 @@ class TrainingConfig:
 
 
 # Step 2: Load a default configuration based on the dataset
-def load_default_config(dataset):
+def load_default_cfg(dataset):
     """Returns a dataset-specific default TrainingConfig."""
     if dataset == "mnist":
         return TrainingConfig(
@@ -75,24 +75,26 @@ if __name__ == "__main__":
     parser.add_argument("--dataset", type=str, help="Dataset name")
 
     # Dynamically add arguments based on TrainingConfig fields
-    argconfig.add_args_by_config_class(parser, TrainingConfig, verbose=True)
+    argcfg.add_args_by_config_class(parser, TrainingConfig, verbose=True)
+
 
     # Uncomment the following block if you want to test this script without manually passing CLI arguments
     # This simulates running:
-    # python demo_argconfig.py --dataset cifar10 --num_epochs 50 --hidden_channels 32,64,128 --use_bn False
+    # python demo_argcfg.py --dataset cifar10 --num_epochs 50 --hidden_channels 32,64,128 --use_bn False
     # Note that, you do not need to pass all the arguments, only the ones you want to override
 
     # cmd = "--dataset cifar10 --num_epochs 50 --hidden_channels 32,64,128 --use_bn False"
     # sys.argv += cmd.split()
 
+
     # Step 4: Parse command-line arguments
     args = parser.parse_args()
 
     # Step 5: Load the default configuration based on the dataset
-    config = load_default_config(args.dataset)
+    config = load_default_cfg(args.dataset)
 
     # Step 6: Override default config values with parsed arguments
-    argconfig.combine_args_into_config(config, args, verbose=True)
+    argcfg.combine_args_into_config(config, args, verbose=True)
 
     # Step 7: Display the final configuration after merging defaults & parsed arguments
     print("Final Configuration:")
@@ -103,7 +105,7 @@ if __name__ == "__main__":
 To run the demo script and override specific arguments, use the following command:
 
 ```bash
-python demo_argconfig.py --dataset cifar10 --num_epochs 50 --hidden_channels 32,64,128 --use_bn False
+python demo_argcfg.py --dataset cifar10 --num_epochs 50 --hidden_channels 32,64,128 --use_bn False
 ```
 
 You can omit any argument to keep its default value.
